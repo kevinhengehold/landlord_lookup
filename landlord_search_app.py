@@ -11,7 +11,16 @@ from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 import psycopg
 
-CONNSTR = "postgresql+psycopg://website_user:HIDDEN_PASSWORD@ep-nameless-wave-277031.us-east-2.aws.neon.tech/neondb"
+#import os
+
+#from dotenv import load_dotenv 
+
+#load_dotenv()
+
+#CONNSTR = f"postgresql+psycopg://{os.getenv('PGUSER')}:{os.getenv('PGPASSWORD')}@ep-nameless-wave-277031.us-east-2.aws.neon.tech/neondb"
+ 
+process.env 
+CONNSTR = f"postgresql+psycopg://{process.env.PGUSER}:{process.env.PGPASSWORD}@ep-nameless-wave-277031.us-east-2.aws.neon.tech/neondb"
 
 app = Flask(__name__)             # create an app instance
 app.config['SQLALCHEMY_DATABASE_URI'] = CONNSTR
