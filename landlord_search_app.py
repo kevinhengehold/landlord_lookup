@@ -9,8 +9,9 @@ import re
 #import os
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
+import psycopg
 
-CONNSTR = "postgresql://website_user:U9Z2LVJbankz@ep-nameless-wave-277031.us-east-2.aws.neon.tech/neondb"
+CONNSTR = "postgresql+psycopg://website_user:U9Z2LVJbankz@ep-nameless-wave-277031.us-east-2.aws.neon.tech/neondb"
 
 app = Flask(__name__)             # create an app instance
 app.config['SQLALCHEMY_DATABASE_URI'] = CONNSTR
