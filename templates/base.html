@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %} - Landlord Lookup</title>
+    <style>
+        nav a {
+            color: #d64161;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+		
+		img.logo {
+			width: 300px;
+			display: block;
+			 margin-left: auto;
+			 margin-right: auto;
+		}
+		
+		table.display-results{
+			border-collapse:collapse;
+			border-spacing:0;
+			width:100%;
+			display:table
+		}
+		
+		.display-results tr th, .display-results tr td{
+			text-align:center;
+		}
+
+		.display-results th{
+			padding:8px 8px;
+			text-align:center;
+			vertical-align:top; 
+			background-color:#3333ff;
+			color:white; 
+		}
+		
+		.display-results tr:nth-child(even) {
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+<body>
+   <!-- <nav>
+        <a href="#">FlaskApp</a>
+        <a href="#">About</a>
+    </nav> -->
+
+	<img class="logo" src="https://cincytenantsunion.files.wordpress.com/2021/10/cropped-there.png">
+
+    <hr>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>

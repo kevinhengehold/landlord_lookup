@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Information Input - {% endblock %}
+{% block content %}
+    <h1>Landlord Properties Search</h1>
+    <p>Use this form to find other properties your landlord may own.</p>
+	<p>Often, landlords own their buildngs through shell companies, making it hard to figure out who owns what. The most reliable way we've found to piece this together is to sear the landlord's address. Becuase the shell companies usually list the same address for tax purposes and official mail, this is a common identifier.</p>
+	<p>Use the form below to search your landlord's address. The search looks for any address that contains the text you search. If you're not sure how your landlord's address is listed, you can search a part of it or use wildcard characters:</p>
+	<ul>
+		<li>An underscore (_) is a wildcard for one character.</li>
+		<li>A percent sign (%) is a wildcard for any number of characters.</li>
+	</ul>
+	<p>Please enter at least three letters or numbers before searching (otherwise it could return the whole database, which will take a very long time).</p>
+	
+	<form action="search_landlord_address" method = "POST">
+		<p>Landlord Address: <input type = "text" name = "landlord_address" /></p>
+		<p><input type = "submit" value = "Search Address" /></p>
+	</form>
+	
+	<p>Alternatively, you can search your landlord's name to search for any other properties they may own. Same rules apply as above.</p>
+	
+	<form action="search_landlord_name" method = "POST">
+		<p>Landlord Name: <input type = "text" name = "landlord_name" /></p>
+		<p><input type = "submit" value = "Search Name" /></p>
+	</form>
+{% endblock %}
