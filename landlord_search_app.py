@@ -31,21 +31,35 @@ class Parcels(db.Model):
     __tablename__ = 'parcels'
     id = db.Column(db.Integer, primary_key=True)
     parcel_number = db.Column(db.String(50))
+    prop_class_code = db.Column(db.Integer, db.ForeignKey('property_classes.id'))
     appraisal_area = db.Column(db.Text, db.ForeignKey('appraisal_areas.id') )
-    location_street_address = db.Column(db.Text)
-    owner_name_1 = db.Column(db.String(250))
-    owner_address_1 = db.Column(db.String(250))
-    mailing_name_1 = db.Column(db.String(250))
-    mailing_address_1 = db.Column(db.Text)
+    owner_name = db.Column(db.String(250))
+    owner_address = db.Column(db.String(250))
+    owner_city  = db.Column(db.String(100))
+    owner_state = db.Column(db.String(50))
+    owner_zip = db.Column(db.String(10))
+    location_street_address = db.Column(db.String(250))
+    location_city = db.Column(db.String(250))
+    mailing_name = db.Column(db.String(250))
+    mailing_address = db.Column(db.String(250))
+    mailing_city = db.Column(db.String(100))
+    mailing_state = db.Column(db.String(50))
+    mailing_zip = db.Column(db.String(10))
+    rental_registration_flag = db.Column(db.CHAR)
+    transfer_date = db.Column(db.Date)
 
     def __repr__(self):
         return f'<Parcels {self.parcel_number}>'
 
-
 class AppraisalAreas(db.Model):
     __tablename__ = "appraisal_areas" 
-    id = db.Column(db.Text, primary_key=True)
-    area_description = db.Column(db.Text)
+    id = db.Column(db.Float, primary_key=True)
+    area_description = db.Column(db.String)
+
+class PropertyClasses(db.Model):
+    __tablename__ = "property_classes" 
+    id = db.Column(db.Integer, primary_key=True)
+    class_description = db.Column(db.String)
 
 
 # reroutes to 'search_input'. 
@@ -75,11 +89,9 @@ def search_address():
             return render_template('search_landlord_address.html', results = "You must enter at least three numbers or letters to search.", search_string = search_str) 
         # do the database stuff
         else:
-            results = Parcels.query.join(AppraisalAreas, AppraisalAreas.id == Parcels.appraisal_area
-                ).add_columns(Parcels.parcel_number, Parcels.location_street_address, AppraisalAreas.area_description,
-                Parcels.owner_name_1, Parcels.owner_address_1, Parcels.mailing_name_1, Parcels.mailing_address_1
-                ).filter(Parcels.owner_address_1.like("%" + search_str + "%") | \
-                        (Parcels.mailing_address_1.like("%" + search_str + "%")) )
+            results = Parcels.query.join(PropertyClasses, PropertyClasses.id == Parcels.prop_class_code, isouter=True).add_columns(Parcels.parcel_number, PropertyClasses.class_description, Parcels.location_street_address, Parcels.location_city, Parcels.owner_name, Parcels.owner_address, Parcels.mailing_name, Parcels.mailing_address
+                ).filter(Parcels.owner_address.like("%" + search_str + "%") | \
+                        (Parcels.mailing_address.like("%" + search_str + "%")) )
             
             return render_template('search_landlord_address.html', results = results, search_string = search_str) 
  
@@ -100,11 +112,9 @@ def search_name():
             return render_template('search_landlord_address.html', results = "You must enter at least three numbers or letters to search.", search_string = search_str) 
         # do the database stuff
         else:
-            results = Parcels.query.join(AppraisalAreas, AppraisalAreas.id == Parcels.appraisal_area
-                ).add_columns(Parcels.parcel_number, Parcels.location_street_address, AppraisalAreas.area_description,
-                Parcels.owner_name_1, Parcels.owner_address_1, Parcels.mailing_name_1, Parcels.mailing_address_1
-                ).filter(Parcels.owner_name_1.like("%" + search_str + "%") | \
-                        (Parcels.mailing_name_1.like("%" + search_str + "%")) )
+            results = Parcels.query.join(PropertyClasses, PropertyClasses.id == Parcels.prop_class_code, isouter=True).add_columns(Parcels.parcel_number, PropertyClasses.class_description, Parcels.location_street_address, Parcels.location_city, Parcels.owner_name, Parcels.owner_address, Parcels.mailing_name, Parcels.mailing_address
+                ).filter(Parcels.owner_name.like("%" + search_str + "%") | \
+                        (Parcels.mailing_name.like("%" + search_str + "%")) )
             
             return render_template('search_landlord_address.html', results = results, search_string = search_str) 
 
