@@ -11,6 +11,8 @@ from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 import psycopg
 
+from string import punctuation 
+
 import os
 
 from dotenv import load_dotenv 
@@ -83,15 +85,17 @@ def search_address():
     if request.method == 'POST':
         form_data = request.form
         search_str = form_data['landlord_address']
-        search_str = re.sub(punct_re, "", search_str).upper()
+        # search_str = re.sub(punct_re, "", search_str).upper()
+
+        search_str = "%" + search_str.upper() + "%"
         
         if len(search_str) <3:
             return render_template('search_landlord_address.html', results = "You must enter at least three numbers or letters to search.", search_string = search_str) 
         # do the database stuff
         else:
             results = Parcels.query.join(PropertyClasses, PropertyClasses.id == Parcels.prop_class_code, isouter=True).add_columns(Parcels.parcel_number, PropertyClasses.class_description, Parcels.location_street_address, Parcels.location_city, Parcels.owner_name, Parcels.owner_address, Parcels.mailing_name, Parcels.mailing_address
-                ).filter(Parcels.owner_address.like("%" + search_str + "%") | \
-                        (Parcels.mailing_address.like("%" + search_str + "%")) )
+                ).filter(Parcels.owner_address.like( search_str ) | \
+                        (Parcels.mailing_address.like( search_str )) )
             
             return render_template('search_landlord_address.html', results = results, search_string = search_str) 
  
@@ -106,15 +110,16 @@ def search_name():
     if request.method == 'POST':
         form_data = request.form
         search_str = form_data['landlord_name']
-        search_str = re.sub(punct_re, "", search_str).upper()
+        
+        search_str = "%" + search_str.upper() + "%"
         
         if len(search_str) <3:
             return render_template('search_landlord_address.html', results = "You must enter at least three numbers or letters to search.", search_string = search_str) 
         # do the database stuff
         else:
             results = Parcels.query.join(PropertyClasses, PropertyClasses.id == Parcels.prop_class_code, isouter=True).add_columns(Parcels.parcel_number, PropertyClasses.class_description, Parcels.location_street_address, Parcels.location_city, Parcels.owner_name, Parcels.owner_address, Parcels.mailing_name, Parcels.mailing_address
-                ).filter(Parcels.owner_name.like("%" + search_str + "%") | \
-                        (Parcels.mailing_name.like("%" + search_str + "%")) )
+                ).filter(Parcels.owner_name.like( search_str ) | \
+                        (Parcels.mailing_name.like( search_str )) )
             
             return render_template('search_landlord_address.html', results = results, search_string = search_str) 
 
