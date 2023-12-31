@@ -9,7 +9,7 @@ import re
 #import os
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
-import psycopg
+#import psycopg2
 
 from string import punctuation 
 
@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-CONNSTR = f"postgresql+psycopg://{os.getenv('PGUSER')}:{os.getenv('PGPASSWORD')}@ep-nameless-wave-277031.us-east-2.aws.neon.tech/neondb"
+CONNSTR = f"postgresql://{os.getenv('PGUSER')}:{os.getenv('PGPASSWORD')}@ep-nameless-wave-277031.us-east-2.aws.neon.tech/neondb"
  
 #CONNSTR = f"postgresql+psycopg://{process.env.PGUSER}:{process.env.PGPASSWORD}@ep-nameless-wave-277031.us-east-2.aws.neon.tech/neondb"
 
