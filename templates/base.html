@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <title>{% block title %} {% endblock %} - Landlord Lookup</title>
     <style>
         nav a {
@@ -19,6 +20,7 @@
 		}
 		
 		table.display-results{
+			border: 1px solid black;
 			border-collapse:collapse;
 			border-spacing:0;
 			width:100%;
@@ -26,6 +28,7 @@
 		}
 		
 		.display-results tr th, .display-results tr td{
+			border: 1px solid black;
 			text-align:center;
 		}
 
@@ -40,6 +43,30 @@
 		.display-results tr:nth-child(even) {
             background-color: lightgrey;
         }
+		
+		table#top-table {
+			width: 75%;
+		}
+		
+		/*
+		#top-table {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+		*/ 
+		
+		input[type=submit]#new-search {
+			background-color: lightgrey;
+			border: 1px solid black;
+			color: #3333ff;
+			padding: 16px 32px;
+			text-decoration: none;
+			margin: 4px 2px;
+			cursor: pointer;
+			font-family: Helvetica, sans-serif;
+			font-size: 18px;
+			font-weight: bold;
+		}
     </style>
 </head>
 <body>

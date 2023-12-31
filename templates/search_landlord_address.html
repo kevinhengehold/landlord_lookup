@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 {% block title %} Search Results - {% endblock %}
 {% block content %}
-    <h1>Search Input: '{{ search_string }}' </h1>
+	<table id="top-table">
+		<tr>
+			<td id="top-table"><h1>Search Input: '{{ search_string }}' </h1></td>
+			<td id="top-table" style="text-align: center;">
+			<form action="/">
+				<input id="new-search" type="submit" value="NEW SEARCH" />
+			</form>
+			</td>
+		</tr>
+	</table>
+
 
 	 {% if search_string|length < 3 %}
 		<p><b>ERROR:</b> {{results}}</p>
@@ -9,10 +19,11 @@
 		<table class="display-results">
 			<tr>
 				<th>Index</th>
-				<th>Parcel Number</th>
+				<th>Mailing Address</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+				<th>Area</th>
 				<th>Property Class</th>
-				<th>Street Address</th>
-				<th>City/Township</th>
 				<th>Owner Name</th>
 				<th>Owner Address</th>
 				<th>Mailing Name</th>
@@ -22,10 +33,11 @@
 				{% for row in results %}
 					<tr>
 						<td>{{loop.index}}</td>
-						<td>{{row.parcel_number}}</td>
+						<td>{{row.fullmailadr}}</td>
+						<td>{{row.latitude}}</td>
+						<td>{{row.longitude}}</td>
+						<td>{{row.area_description}}</td>
 						<td>{{row.class_description}}</td>
-						<td>{{row.location_street_address}}</td>
-						<td>{{row.location_city}}</td>
 						<td>{{row.owner_name}}</td>
 						<td>{{row.owner_address}}</td>
 						<td>{{row.mailing_name}}</td>
@@ -37,5 +49,3 @@
 	{% endif %}
 		
 {% endblock %}
-
-
