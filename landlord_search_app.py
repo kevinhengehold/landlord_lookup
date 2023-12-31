@@ -9,7 +9,6 @@ import re
 #import os
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
-#import psycopg2
 
 from string import punctuation 
 
