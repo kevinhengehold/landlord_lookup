@@ -5,7 +5,6 @@
 #from sqlalchemy import text, select, and_, or_
 
 import re
-import pandas as pd 
 
 #import os
 from flask import Flask, render_template, request, url_for, redirect
@@ -152,25 +151,6 @@ def search_name():
             return render_template('search_landlord_address.html', results = results, search_string = search_str[1:-1]) 
 
 
-
-@app.route('/excel_export', methods=['GET', 'POST'])
-def excel_file_export():
-    export_form_data = request.form   
-    print(request.form.keys())
-    
-    # pdb.set_trace()
-   
-    df = pd.DataFrame(global_results)
-    
-    print("\n\n")
-    print(df.head(2))
-    print("\n\n")
-    
-    filename = 'data_download.xlsx'
-
-    writer = pd.ExcelWriter(filename)
-    df.to_excel(writer, index=False)
-    writer.close()
  
 if __name__ == "__main__":        # on running python app.py
     app.run(debug=True)                     # run the flask app
