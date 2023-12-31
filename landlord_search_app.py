@@ -137,8 +137,8 @@ def search_name():
             return render_template('search_landlord_address.html', results = "You must enter at least three numbers or letters to search.", search_string = search_str) 
         # do the database stuff
         else:
-            results = Parcels.query.join(PropertyClasses, PropertyClasses.id == Parcels.prop_class_code, isouter=False).join(AppraisalAreas, AppraisalAreas.id == Parcels.appraisal_area, isouter=False).join(Addresses, Addresses.fk_parcel_number == Parcels.parcel_number, isouter = False).add_columns(Addresses.fullmailadr, Addresses.latitude, Addresses.longitude, AppraisalAreas.area_description, PropertyClasses.class_description, Parcels.owner_name, Parcels.owner_address, Parcels.mailing_name, Parcels.mailing_address).filter(Parcels.owner_address.like( search_str ) | \
-            (Parcels.mailing_address.like( search_str )) )
+            results = Parcels.query.join(PropertyClasses, PropertyClasses.id == Parcels.prop_class_code, isouter=False).join(AppraisalAreas, AppraisalAreas.id == Parcels.appraisal_area, isouter=False).join(Addresses, Addresses.fk_parcel_number == Parcels.parcel_number, isouter = False).add_columns(Addresses.fullmailadr, Addresses.latitude, Addresses.longitude, AppraisalAreas.area_description, PropertyClasses.class_description, Parcels.owner_name, Parcels.owner_address, Parcels.mailing_name, Parcels.mailing_address).filter(Parcels.owner_name.like( search_str ) | \
+            (Parcels.mailing_name.like( search_str )) )
             
             return render_template('search_landlord_address.html', results = results, search_string = search_str[1:-1]) 
 
