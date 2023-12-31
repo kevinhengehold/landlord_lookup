@@ -5,6 +5,7 @@
 #from sqlalchemy import text, select, and_, or_
 
 import re
+import pandas as pd 
 
 #import os
 from flask import Flask, render_template, request, url_for, redirect
@@ -15,6 +16,10 @@ from string import punctuation
 import os
 
 from dotenv import load_dotenv 
+
+import pdb
+
+global_results = None 
 
 load_dotenv()
 
@@ -115,6 +120,9 @@ def search_address():
         else:
             results = Parcels.query.join(PropertyClasses, PropertyClasses.id == Parcels.prop_class_code, isouter=False).join(AppraisalAreas, AppraisalAreas.id == Parcels.appraisal_area, isouter=False).join(Addresses, Addresses.fk_parcel_number == Parcels.parcel_number, isouter = False).add_columns(Addresses.fullmailadr, Addresses.latitude, Addresses.longitude, AppraisalAreas.area_description, PropertyClasses.class_description, Parcels.owner_name, Parcels.owner_address, Parcels.mailing_name, Parcels.mailing_address).filter(Parcels.owner_address.like( search_str ) | \
                         (Parcels.mailing_address.like( search_str )) )
+                        
+            #print("result type: ", type(results))
+            global_results = results 
             
             return render_template('search_landlord_address.html', results = results, search_string = search_str[1:-1]) 
  
@@ -139,9 +147,31 @@ def search_name():
             results = Parcels.query.join(PropertyClasses, PropertyClasses.id == Parcels.prop_class_code, isouter=False).join(AppraisalAreas, AppraisalAreas.id == Parcels.appraisal_area, isouter=False).join(Addresses, Addresses.fk_parcel_number == Parcels.parcel_number, isouter = False).add_columns(Addresses.fullmailadr, Addresses.latitude, Addresses.longitude, AppraisalAreas.area_description, PropertyClasses.class_description, Parcels.owner_name, Parcels.owner_address, Parcels.mailing_name, Parcels.mailing_address).filter(Parcels.owner_name.like( search_str ) | \
             (Parcels.mailing_name.like( search_str )) )
             
+            
+            
             return render_template('search_landlord_address.html', results = results, search_string = search_str[1:-1]) 
 
+
+
+@app.route('/excel_export', methods=['GET', 'POST'])
+def excel_file_export():
+    export_form_data = request.form   
+    print(request.form.keys())
+    
+    # pdb.set_trace()
+   
+    df = pd.DataFrame(global_results)
+    
+    print("\n\n")
+    print(df.head(2))
+    print("\n\n")
+    
+    filename = 'data_download.xlsx'
+
+    writer = pd.ExcelWriter(filename)
+    df.to_excel(writer, index=False)
+    writer.close()
  
 if __name__ == "__main__":        # on running python app.py
-    app.run()                     # run the flask app
+    app.run(debug=True)                     # run the flask app
     

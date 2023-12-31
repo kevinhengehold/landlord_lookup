@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='img/favicon.ico')}}" />
     <title>{% block title %} {% endblock %} - Landlord Lookup</title>
     <style>
         nav a {
@@ -45,7 +45,7 @@
         }
 		
 		table#top-table {
-			width: 75%;
+			width: 100%;
 		}
 		
 		/*
@@ -67,7 +67,67 @@
 			font-size: 18px;
 			font-weight: bold;
 		}
+		
+		.search-result-button {
+			background-color: lightgrey;
+			border: 1px solid black;
+			color: #3333ff;
+			padding: 16px 32px;
+			text-decoration: none;
+			margin: 4px 2px;
+			cursor: pointer;
+			font-family: Helvetica, sans-serif;
+			font-size: 18px;
+			font-weight: bold;
+		}
     </style>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='scripts/tableToExcel.js')}}"></script>
+	 
+	 
+	<!--<script type="text/javascript" src="{{url_for('static', filename='scripts/saveAsExcel.js')}}"></script> -->
+	 <script>
+    //$(document).ready(function () {
+    //    $("#btnExport").click(function () 
+		
+		
+		function downloadTable() {
+			TableToExcel.convert(document.getElementById("search-results-table"), {
+				name: "landlord search table.xlsx",
+				sheet: {
+				name: "properties"
+			  }
+			});
+					
+		}
+
+    /*        let table = document.getElementById("search-results-table");
+            console.log(table);
+            debugger;
+            TableToExcel.convert(table, {
+                name: 'property search output.xlsx',
+                sheet: {
+                    name: 'apartments'
+                }
+            });
+        });
+    }); */ 
+	</script>
+	<!--<script>
+		function downloadTable(){
+			const myElement = document.getElementById("search-results-table");
+			debugger; 
+			
+			myElement.getElementsByTagName("th")  
+			
+			
+			
+			console.log(myElement.outerHTML); 
+			console.log("You wrote a thing to the console! You beautiful son of a bitch!");
+		}
+	</script>-->
+
 </head>
 <body>
    <!-- <nav>

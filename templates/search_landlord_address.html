@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 {% block title %} Search Results - {% endblock %}
+
 {% block content %}
 	<table id="top-table">
 		<tr>
-			<td id="top-table"><h1>Search Input: '{{ search_string }}' </h1></td>
-			<td id="top-table" style="text-align: center;">
+			<td id="top-table" width="33%"><h1>Search Input: '{{ search_string }}' </h1></td>
+			<td id="top-table" style="text-align: center;" width="33%">
 			<form action="/">
-				<input id="new-search" type="submit" value="NEW SEARCH" />
+				<input class="search-result-button" type="submit" value="NEW SEARCH" /> <!-- id="new-search" -->
 			</form>
+			</td>
+			<td style="text-align: center;" width="33%">
+				<input id="btnExport" class="search-result-button" type="button" value="DOWNLOAD RESULTS" onclick="downloadTable();" />
 			</td>
 		</tr>
 	</table>
@@ -16,7 +20,9 @@
 	 {% if search_string|length < 3 %}
 		<p><b>ERROR:</b> {{results}}</p>
 	{% else %}
-		<table class="display-results">
+		<!--<p> <input id="btnExport" type="button" value="Download Table" onclick="downloadTable();" />
+				<input type="button" value="Import as Excel" onclick="saveAsExcel('search-results-table', 'landlord addresses.xlsx')"/></p> -->
+		<table id="search-results-table" class="display-results">
 			<tr>
 				<th>Index</th>
 				<th>Mailing Address</th>
@@ -46,6 +52,7 @@
 				{% endfor %}
 			</tbody>
 		</table>
+
 	{% endif %}
 		
 {% endblock %}
