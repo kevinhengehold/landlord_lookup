@@ -17,8 +17,7 @@ import os
 from dotenv import load_dotenv 
 
 import pdb
-
-global_results = None 
+# pdb.set_trace()
 
 load_dotenv()
 
@@ -121,8 +120,7 @@ def search_address():
                         (Parcels.mailing_address.like( search_str )) )
                         
             #print("result type: ", type(results))
-            global_results = results 
-            
+                        
             return render_template('search_landlord_address.html', results = results, search_string = search_str[1:-1]) 
  
 
@@ -153,5 +151,5 @@ def search_name():
 
  
 if __name__ == "__main__":        # on running python app.py
-    app.run(debug=True)                     # run the flask app
+    app.run()                     # run the flask app
     

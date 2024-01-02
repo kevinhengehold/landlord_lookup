@@ -18,7 +18,22 @@
 
 
 	 {% if search_string|length < 3 %}
-		<p><b>ERROR:</b> {{results}}</p>
+		<hr>
+		<p><strong>ERROR:</strong> '{{search_string}}' is too short to search. Search a longer word or words.</p>
+	{% elif results.count() == 0 %}
+		<hr>
+		<h2> Searching '{{search_string}}' returned no results.</h2>
+		<p>Suggestions:</p>
+		<ul>
+			<li>Search a smaller word or words.</li>
+			<li>Use wildcard characters.
+			<ul>
+				<li>An underscore ('_') allows for a single character to be wild (i.e. 'be_r' could match 'beer', 'bear', etc.)</li>
+				<li>A percentage sign ('%') will match zero or more characters.  </li>
+			</ul>
+			</li>
+		</ul>
+
 	{% else %}
 		<!--<p> <input id="btnExport" type="button" value="Download Table" onclick="downloadTable();" />
 				<input type="button" value="Import as Excel" onclick="saveAsExcel('search-results-table', 'landlord addresses.xlsx')"/></p> -->
