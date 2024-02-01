@@ -35,6 +35,7 @@ class Parcels(db.Model):
     __tablename__ = 'parcels'
     id = db.Column(db.Integer, primary_key=True)
     parcel_number = db.Column(db.String(15))
+    
     prop_class_code = db.Column(db.Integer, db.ForeignKey('property_classes.id'))
     appraisal_area = db.Column(db.Text, db.ForeignKey('appraisal_areas.id') )
     owner_name = db.Column(db.String(250))
@@ -43,7 +44,6 @@ class Parcels(db.Model):
     owner_state = db.Column(db.String(50))
     owner_zip = db.Column(db.String(10))
     location_street_address = db.Column(db.String(250))
-    location_city = db.Column(db.String(250))
     mailing_name = db.Column(db.String(250))
     mailing_address = db.Column(db.String(250))
     mailing_city = db.Column(db.String(100))
@@ -51,6 +51,8 @@ class Parcels(db.Model):
     mailing_zip = db.Column(db.String(10))
     rental_registration_flag = db.Column(db.CHAR)
     transfer_date = db.Column(db.Date)
+    county = db.Column(db.String(50))
+    landlord_id = db.Column(db.Integer)
 
     def __repr__(self):
         return f'<Parcels {self.parcel_number}>'
